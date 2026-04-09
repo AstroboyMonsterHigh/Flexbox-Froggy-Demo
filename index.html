@@ -1,445 +1,723 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flex-Direction Interactive Demo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>🐸 Flexbox Froggy: Interactive Playground & Sandbox</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none; /* avoid accidental text selection on sliders, but okay for learning */
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            min-height: 100vh;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #1b4d2e 0%, #0e3a22 100%);
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 20px;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    /* main container */
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        h1 {
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+    /* header */
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
 
-        .demo-section {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+    .header h1 {
+      font-size: 2.6rem;
+      margin: 0;
+      color: #ffdd99;
+      text-shadow: 3px 3px 0 #2c5a2e;
+      letter-spacing: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .demo-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-            border-left: 4px solid #667eea;
-            padding-left: 15px;
-        }
+    .header h1 span {
+      font-size: 2.8rem;
+    }
 
-        .demo-description {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
+    .sub {
+      color: #e9f5db;
+      font-weight: 500;
+      background: rgba(0,0,0,0.3);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      margin-top: 10px;
+    }
 
-        .flex-container {
-            display: flex;
-            background: #f7f9fc;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            min-height: 250px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+    /* property grid: 8 cards */
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
 
-        /* Individual demo styles */
-        .demo-row .flex-container {
-            flex-direction: row;
-        }
+    .card {
+      background: rgba(255, 248, 225, 0.95);
+      border-radius: 32px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+      padding: 14px 16px 20px;
+      transition: transform 0.1s ease;
+      backdrop-filter: blur(1px);
+      border: 1px solid #ffecb3;
+    }
 
-        .demo-row-reverse .flex-container {
-            flex-direction: row-reverse;
-        }
+    .card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px 0;
+      font-size: 1.35rem;
+      background: #2b5e2f;
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 40px;
+      color: white;
+      background: #1f5438;
+      letter-spacing: 0.5px;
+    }
 
-        .demo-column .flex-container {
-            flex-direction: column;
-        }
+    .control-group {
+      margin: 14px 0;
+    }
 
-        .demo-column-reverse .flex-container {
-            flex-direction: column-reverse;
-        }
+    .control-group label {
+      font-weight: 600;
+      color: #2d3e2b;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        /* Interactive demo styles */
-        .interactive-demo .flex-container {
-            flex-direction: row;
-            transition: flex-direction 0.3s ease;
-        }
+    select, input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 28px;
+      border: 1px solid #b7b78a;
+      background: white;
+      font-weight: 500;
+      font-family: monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
 
-        .flex-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
+    select {
+      background: #fef9e6;
+    }
 
-        /* Different sizes for visual interest */
-        .flex-item:nth-child(1) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .flex-item:nth-child(2) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .flex-item:nth-child(3) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .flex-item:nth-child(4) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    input[type="range"] {
+      padding: 0;
+      height: 6px;
+      accent-color: #2e7d32;
+    }
 
-        .demo-row .flex-item,
-        .demo-row-reverse .flex-item,
-        .interactive-demo .flex-item {
-            width: 100px;
-            margin: 0 10px;
-        }
+    .value-display {
+      background: #e9e0c7;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      text-align: center;
+      font-weight: bold;
+      color: #1f3b1a;
+    }
 
-        .demo-column .flex-item,
-        .demo-column-reverse .flex-item {
-            width: 150px;
-            margin: 10px 0;
-        }
+    /* mini preview inside each card */
+    .mini-preview {
+      background: #cfe3c3;
+      border-radius: 24px;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #9bba8f;
+    }
 
-        .controls {
-            background: #f0f2f5;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
+    .mini-flex {
+      display: flex;
+      background: #f2e5c2;
+      border-radius: 20px;
+      min-height: 80px;
+      padding: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
+      transition: all 0.2s ease;
+    }
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
+    .mini-item {
+      background: #f5b042;
+      color: #2c2b1f;
+      width: 38px;
+      height: 38px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: all 0.1s;
+    }
 
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+    /* MAIN SANDBOX */
+    .sandbox-section {
+      background: #1e2f1cde;
+      backdrop-filter: blur(4px);
+      border-radius: 48px;
+      padding: 24px 22px 32px;
+      margin-top: 20px;
+      border: 2px solid #ffdd99;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+    }
 
-        button:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+    .sandbox-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
 
-        button.active {
-            background: #48bb78;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+    .sandbox-title h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: #ffefc0;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
 
-        .axis-info {
-            display: inline-block;
-            background: #e2e8f0;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-family: monospace;
-            margin-left: 10px;
-        }
+    .reset-btn {
+      background: #fedba0;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 60px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.1s;
+      font-family: inherit;
+      box-shadow: 0 2px 6px black;
+    }
 
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 12px;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            overflow-x: auto;
-        }
+    .reset-btn:hover {
+      background: #ffcd7e;
+      transform: scale(0.97);
+    }
 
-        .tip {
-            background: #fef5e7;
-            border-left: 4px solid #f39c12;
-            padding: 12px;
-            margin-top: 15px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
+    /* sandbox control panel - selectors for all props */
+    .sandbox-controls {
+      background: #3a2e1faa;
+      border-radius: 36px;
+      padding: 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: space-between;
+    }
 
-        .tip strong {
-            color: #f39c12;
-        }
+    .prop-group {
+      background: #fbf5e3;
+      border-radius: 28px;
+      padding: 10px 16px;
+      flex: 1 1 180px;
+      min-width: 150px;
+      box-shadow: inset 0 0 0 1px #ebd5a0, 0 4px 8px rgba(0,0,0,0.1);
+    }
 
-        @media (max-width: 768px) {
-            .flex-item {
-                font-size: 0.9rem;
-                padding: 12px;
-            }
-            
-            .demo-row .flex-item,
-            .demo-row-reverse .flex-item {
-                width: 70px;
-                margin: 0 5px;
-            }
-            
-            .demo-column .flex-item,
-            .demo-column-reverse .flex-item {
-                width: 100px;
-            }
-        }
-    </style>
+    .prop-group label {
+      font-weight: bold;
+      display: block;
+      font-size: 0.8rem;
+      color: #3b522e;
+    }
+
+    .prop-group select, .prop-group input {
+      background: white;
+      margin-top: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* the big playground flex container */
+    .playground {
+      background: #c2d5b0;
+      border-radius: 48px;
+      padding: 28px;
+      box-shadow: inset 0 0 0 3px #eef4e0, 0 12px 20px rgba(0,0,0,0.3);
+    }
+
+    .flex-sandbox {
+      display: flex;
+      background: #f6efdb;
+      min-height: 350px;
+      border-radius: 36px;
+      padding: 20px;
+      gap: 16px;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      flex-wrap: wrap;
+    }
+
+    .frog-item {
+      background: #38a169;
+      background-image: radial-gradient(circle at 25% 35%, #5fbb7a, #2d6a4f);
+      width: 85px;
+      height: 85px;
+      border-radius: 40px 30px 50px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      font-weight: bold;
+      box-shadow: 0 6px 0 #1d3e1f;
+      transition: all 0.1s;
+      color: #ffefb9;
+      text-shadow: 2px 2px 0 #1f4f2b;
+    }
+
+    /* custom order marker */
+    .order-badge {
+      font-size: 0.9rem;
+      background: #f4c542;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #2c2b1f;
+      margin-left: 6px;
+    }
+
+    /* responsiveness */
+    @media (max-width: 750px) {
+      .frog-item { width: 65px; height: 65px; font-size: 1.8rem; }
+      .sandbox-controls { flex-direction: column; }
+      .property-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎨 Flex-Direction: Complete Guide</h1>
+<div class="app">
+  <div class="header">
+    <h1>
+      <span>🐸</span> FLEXBOX FROGGY LAB <span>🍃</span>
+    </h1>
+    <div class="sub">🎮 adjust each property → see live previews → ultimate sandbox 🧪</div>
+  </div>
 
-        <!-- Row Demo -->
-        <div class="demo-section demo-row">
-            <div class="demo-title">
-                flex-direction: row 
-                <span class="axis-info">Main Axis → (left to right)</span>
-            </div>
-            <div class="demo-description">
-                Items flow horizontally from left to right. This is the default value.
-            </div>
-            <div class="flex-container">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
-                <div class="flex-item">Item 4</div>
-            </div>
-            <div class="code-block">
-                .container {<br>
-                &nbsp;&nbsp;display: flex;<br>
-                &nbsp;&nbsp;flex-direction: row;<br>
-                }
-            </div>
-        </div>
+  <!-- 8 property cards with individual live demos -->
+  <div class="property-grid" id="propertyGrid">
+    <!-- each card will be populated via JS, but I'll build static structure with dynamic binding -->
+  </div>
 
-        <!-- Row-Reverse Demo -->
-        <div class="demo-section demo-row-reverse">
-            <div class="demo-title">
-                flex-direction: row-reverse 
-                <span class="axis-info">Main Axis ← (right to left)</span>
-            </div>
-            <div class="demo-description">
-                Items flow horizontally from right to left (reverse order).
-            </div>
-            <div class="flex-container">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
-                <div class="flex-item">Item 4</div>
-            </div>
-            <div class="code-block">
-                .container {<br>
-                &nbsp;&nbsp;display: flex;<br>
-                &nbsp;&nbsp;flex-direction: row-reverse;<br>
-                }
-            </div>
-        </div>
-
-        <!-- Column Demo -->
-        <div class="demo-section demo-column">
-            <div class="demo-title">
-                flex-direction: column 
-                <span class="axis-info">Main Axis ↓ (top to bottom)</span>
-            </div>
-            <div class="demo-description">
-                Items flow vertically from top to bottom.
-            </div>
-            <div class="flex-container">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
-                <div class="flex-item">Item 4</div>
-            </div>
-            <div class="code-block">
-                .container {<br>
-                &nbsp;&nbsp;display: flex;<br>
-                &nbsp;&nbsp;flex-direction: column;<br>
-                }
-            </div>
-        </div>
-
-        <!-- Column-Reverse Demo -->
-        <div class="demo-section demo-column-reverse">
-            <div class="demo-title">
-                flex-direction: column-reverse 
-                <span class="axis-info">Main Axis ↑ (bottom to top)</span>
-            </div>
-            <div class="demo-description">
-                Items flow vertically from bottom to top (reverse order).
-            </div>
-            <div class="flex-container">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
-                <div class="flex-item">Item 4</div>
-            </div>
-            <div class="code-block">
-                .container {<br>
-                &nbsp;&nbsp;display: flex;<br>
-                &nbsp;&nbsp;flex-direction: column-reverse;<br>
-                }
-            </div>
-        </div>
-
-        <!-- Interactive Demo -->
-        <div class="demo-section interactive-demo">
-            <div class="demo-title">
-                🎮 Interactive Demo - Try It Yourself!
-            </div>
-            <div class="demo-description">
-                Click the buttons below to see how flex-direction changes in real-time.
-            </div>
-            <div class="flex-container" id="interactiveContainer">
-                <div class="flex-item">Item 1</div>
-                <div class="flex-item">Item 2</div>
-                <div class="flex-item">Item 3</div>
-                <div class="flex-item">Item 4</div>
-            </div>
-            <div class="controls">
-                <div style="font-weight: bold; margin-bottom: 10px;">Change flex-direction:</div>
-                <div class="button-group">
-                    <button onclick="changeDirection('row')" id="btn-row">row →</button>
-                    <button onclick="changeDirection('row-reverse')" id="btn-row-reverse">row-reverse ←</button>
-                    <button onclick="changeDirection('column')" id="btn-column">column ↓</button>
-                    <button onclick="changeDirection('column-reverse')" id="btn-column-reverse">column-reverse ↑</button>
-                </div>
-                <div class="tip">
-                    <strong>💡 Pro Tip:</strong> Notice how <code>justify-content</code> and <code>align-items</code> swap axes when changing direction! 
-                    In row mode, justify-content controls horizontal alignment. In column mode, it controls vertical alignment.
-                </div>
-            </div>
-            <div class="code-block" id="liveCode">
-                .container {<br>
-                &nbsp;&nbsp;display: flex;<br>
-                &nbsp;&nbsp;flex-direction: row;<br>
-                }
-            </div>
-        </div>
-
-        <!-- Quick Reference Card -->
-        <div class="demo-section">
-            <div class="demo-title">📋 Quick Reference Card</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong style="color: #667eea;">Row (default)</strong><br>
-                    Items: ← →<br>
-                    justify-content: horizontal<br>
-                    align-items: vertical
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong style="color: #667eea;">Row-Reverse</strong><br>
-                    Items: → ←<br>
-                    justify-content: horizontal (reversed)<br>
-                    align-items: vertical
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong style="color: #667eea;">Column</strong><br>
-                    Items: ↑ ↓<br>
-                    justify-content: vertical<br>
-                    align-items: horizontal
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong style="color: #667eea;">Column-Reverse</strong><br>
-                    Items: ↓ ↑<br>
-                    justify-content: vertical (reversed)<br>
-                    align-items: horizontal
-                </div>
-            </div>
-        </div>
-
-        <!-- Common Use Cases -->
-        <div class="demo-section">
-            <div class="demo-title">🎯 Common Use Cases</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong>📱 Navigation Bar</strong><br>
-                    <code>flex-direction: row</code><br>
-                    Use for horizontal menus and navigation links.
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong>📝 Sidebar Layout</strong><br>
-                    <code>flex-direction: column</code><br>
-                    Perfect for vertical navigation or stacked content.
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong>📱 Mobile Views</strong><br>
-                    <code>@media (max-width: 768px) { flex-direction: column; }</code><br>
-                    Switch from row to column on smaller screens.
-                </div>
-                <div style="background: #f7f9fc; padding: 15px; border-radius: 8px;">
-                    <strong>🌐 RTL Languages</strong><br>
-                    <code>flex-direction: row-reverse</code><br>
-                    Use for right-to-left languages like Arabic or Hebrew.
-                </div>
-            </div>
-        </div>
+  <!-- MASTER SANDBOX: combine ALL properties -->
+  <div class="sandbox-section">
+    <div class="sandbox-title">
+      <h2>🐸✨ ULTIMATE FLEXBOX SANDBOX ✨🐸</h2>
+      <button class="reset-btn" id="resetSandboxBtn">⟳ Reset All Props</button>
     </div>
+    <div class="sandbox-controls" id="sandboxControlsPanel">
+      <!-- dynamic controls: justify-content, align-items, flex-direction, order, align-self, flex-wrap, flex-flow, align-content -->
+    </div>
+    <div class="playground">
+      <div class="flex-sandbox" id="mainFlexSandbox">
+        <!-- 5 froggy items with custom order & align-self demonstration -->
+        <div class="frog-item" data-id="0">🐸<span class="order-badge">1</span></div>
+        <div class="frog-item" data-id="1">🐸<span class="order-badge">2</span></div>
+        <div class="frog-item" data-id="2">🐸<span class="order-badge">3</span></div>
+        <div class="frog-item" data-id="3">🐸<span class="order-badge">4</span></div>
+        <div class="frog-item" data-id="4">🐸<span class="order-badge">5</span></div>
+      </div>
+    </div>
+    <div style="margin-top: 18px; text-align: center; font-size: 0.85rem; color: #ffecb3; background: #2d4625; width: fit-content; margin-inline: auto; padding: 6px 18px; border-radius: 60px;">
+      💡 Tip: 'order' changes sequence, 'align-self' overrides align-items per frog! Also flex-flow combines direction+wrap.
+    </div>
+  </div>
+</div>
 
-    <script>
-        function changeDirection(direction) {
-            const container = document.getElementById('interactiveContainer');
-            const liveCode = document.getElementById('liveCode');
-            
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.button-group button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            const activeButton = document.getElementById(`btn-${direction}`);
-            if (activeButton) activeButton.classList.add('active');
-            
-            // Apply the new direction
-            container.style.flexDirection = direction;
-            
-            // Update the live code display
-            liveCode.innerHTML = `.container {<br>&nbsp;&nbsp;display: flex;<br>&nbsp;&nbsp;flex-direction: ${direction};<br>}`;
-            
-            // Add a subtle animation effect
-            container.style.transform = 'scale(0.99)';
-            setTimeout(() => {
-                container.style.transform = 'scale(1)';
-            }, 150);
-        }
-        
-        // Initialize with row active
-        document.getElementById('btn-row').classList.add('active');
-        
-        // Add hover effects to show axis information
-        const containers = document.querySelectorAll('.flex-container');
-        containers.forEach(container => {
-            container.addEventListener('mouseenter', function(e) {
-                this.style.transform = 'scale(1.01)';
-                this.style.transition = 'transform 0.2s ease';
-            });
-            container.addEventListener('mouseleave', function(e) {
-                this.style.transform = 'scale(1)';
-            });
+<script>
+  // -------- helper: get DOM elements
+  const sandboxContainer = document.getElementById('mainFlexSandbox');
+  // frog items array (5 frogs)
+  let frogElements = () => Array.from(document.querySelectorAll('#mainFlexSandbox .frog-item'));
+
+  // ---------- STATE for sandbox (all flex properties) ----------
+  const sandboxState = {
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignContent: 'stretch',
+    flexFlowRowWrap: null,   // we'll handle flex-flow as separate but also combine
+    // for order we store array of order values per frog
+    orderValues: [0, 0, 0, 0, 0],
+    // alignSelf per frog
+    alignSelfValues: ['auto', 'auto', 'auto', 'auto', 'auto']
+  };
+
+  // apply all current sandbox styles to main flex container & individual frogs
+  function applySandboxStyles() {
+    const container = sandboxContainer;
+    // build flex properties
+    let flexDirectionVal = sandboxState.flexDirection;
+    let flexWrapVal = sandboxState.flexWrap;
+    // if flex-flow is explicitly changed, we could combine, but we have separate controls.
+    // but we also handle flex-flow via two selects, but for simplicity we apply direction + wrap separately
+    container.style.flexDirection = flexDirectionVal;
+    container.style.flexWrap = flexWrapVal;
+    container.style.justifyContent = sandboxState.justifyContent;
+    container.style.alignItems = sandboxState.alignItems;
+    container.style.alignContent = sandboxState.alignContent;
+    
+    // apply order and align-self to each frog
+    const frogs = frogElements();
+    frogs.forEach((frog, idx) => {
+      // order property
+      frog.style.order = sandboxState.orderValues[idx];
+      // align-self (if auto, remove to let container align-items take over)
+      const selfVal = sandboxState.alignSelfValues[idx];
+      if (selfVal === 'auto') {
+        frog.style.alignSelf = '';
+      } else {
+        frog.style.alignSelf = selfVal;
+      }
+      // update badge number to show visual order index (order value + original position)
+      const badgeSpan = frog.querySelector('.order-badge');
+      if (badgeSpan) {
+        let displayOrder = sandboxState.orderValues[idx];
+        badgeSpan.innerText = displayOrder;
+        // optional: if order != 0 show star
+        if(displayOrder !== 0) badgeSpan.style.background = "#ffaa44";
+        else badgeSpan.style.background = "#f4c542";
+      }
+    });
+  }
+
+  // update specific sandbox control and re-render
+  function updateSandboxProperty(prop, value) {
+    if (prop === 'order') return; // handled separately
+    if (prop === 'alignSelf') return;
+    sandboxState[prop] = value;
+    applySandboxStyles();
+  }
+
+  // update order for specific frog index
+  function updateFrogOrder(idx, orderVal) {
+    sandboxState.orderValues[idx] = parseInt(orderVal) || 0;
+    applySandboxStyles();
+  }
+
+  function updateFrogAlignSelf(idx, val) {
+    sandboxState.alignSelfValues[idx] = val;
+    applySandboxStyles();
+  }
+
+  // reset all sandbox properties to default
+  function resetSandbox() {
+    sandboxState.justifyContent = 'flex-start';
+    sandboxState.alignItems = 'stretch';
+    sandboxState.flexDirection = 'row';
+    sandboxState.flexWrap = 'nowrap';
+    sandboxState.alignContent = 'stretch';
+    sandboxState.orderValues = [0,0,0,0,0];
+    sandboxState.alignSelfValues = ['auto','auto','auto','auto','auto'];
+    // update all selectors and sliders in sandbox UI
+    syncSandboxControlsToState();
+    applySandboxStyles();
+  }
+
+  // sync UI selects/inputs to current state
+  function syncSandboxControlsToState() {
+    const jcSelect = document.getElementById('sb-justifyContent');
+    if(jcSelect) jcSelect.value = sandboxState.justifyContent;
+    const aiSelect = document.getElementById('sb-alignItems');
+    if(aiSelect) aiSelect.value = sandboxState.alignItems;
+    const fdSelect = document.getElementById('sb-flexDirection');
+    if(fdSelect) fdSelect.value = sandboxState.flexDirection;
+    const fwSelect = document.getElementById('sb-flexWrap');
+    if(fwSelect) fwSelect.value = sandboxState.flexWrap;
+    const acSelect = document.getElementById('sb-alignContent');
+    if(acSelect) acSelect.value = sandboxState.alignContent;
+    // order sliders
+    for(let i=0;i<5;i++) {
+      const orderSlider = document.getElementById(`order-slider-${i}`);
+      if(orderSlider) orderSlider.value = sandboxState.orderValues[i];
+      const orderValSpan = document.getElementById(`order-val-${i}`);
+      if(orderValSpan) orderValSpan.innerText = sandboxState.orderValues[i];
+      const alignSelfSelect = document.getElementById(`alignself-select-${i}`);
+      if(alignSelfSelect) alignSelfSelect.value = sandboxState.alignSelfValues[i];
+    }
+  }
+
+  // ---------- BUILD INDIVIDUAL PROPERTY CARDS (8 cards) ----------
+  const propertyDefinitions = [
+    { name: 'justify-content', options: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'], default: 'flex-start', type: 'select' },
+    { name: 'align-items', options: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'], default: 'stretch', type: 'select' },
+    { name: 'flex-direction', options: ['row', 'row-reverse', 'column', 'column-reverse'], default: 'row', type: 'select' },
+    { name: 'order', desc: 'Order (individual item)', type: 'orderDemo', note: 'Drag slider per frog in sandbox → here we show mini order demo' },
+    { name: 'align-self', type: 'selfDemo', note: 'Overrides align-items for specific item' },
+    { name: 'flex-wrap', options: ['nowrap', 'wrap', 'wrap-reverse'], default: 'nowrap', type: 'select' },
+    { name: 'flex-flow', type: 'flexFlowDemo', note: 'Shorthand: direction + wrap' },
+    { name: 'align-content', options: ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around'], default: 'stretch', type: 'select' }
+  ];
+
+  const gridContainer = document.getElementById('propertyGrid');
+  function buildPropertyCards() {
+    gridContainer.innerHTML = '';
+    // for each property, build card with mini interactive preview
+    propertyDefinitions.forEach(prop => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const titleSpan = document.createElement('h3');
+      titleSpan.innerText = prop.name;
+      card.appendChild(titleSpan);
+      
+      if (prop.type === 'select') {
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-group';
+        const label = document.createElement('label');
+        label.innerText = `🎛️ ${prop.name}:`;
+        const select = document.createElement('select');
+        prop.options.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.innerText = opt;
+          select.appendChild(option);
         });
-    </script>
+        select.value = prop.default;
+        controlDiv.appendChild(label);
+        controlDiv.appendChild(select);
+        card.appendChild(controlDiv);
+        
+        // mini preview container
+        const previewDiv = document.createElement('div');
+        previewDiv.className = 'mini-preview';
+        const flexBox = document.createElement('div');
+        flexBox.className = 'mini-flex';
+        // create 3 colorful items
+        for(let i=1;i<=3;i++) {
+          const item = document.createElement('div');
+          item.className = 'mini-item';
+          item.innerText = i;
+          flexBox.appendChild(item);
+        }
+        previewDiv.appendChild(flexBox);
+        card.appendChild(previewDiv);
+        
+        // update preview based on select
+        function updatePreview() {
+          flexBox.style[prop.name] = select.value;
+          // for flex-direction we need also align-items default? we set row default, also min-height
+          if(prop.name === 'flex-direction') {
+            if(select.value === 'column' || select.value === 'column-reverse') {
+              flexBox.style.minHeight = '120px';
+            } else {
+              flexBox.style.minHeight = '80px';
+            }
+          } else {
+            flexBox.style.minHeight = '80px';
+          }
+          if(prop.name === 'align-content') {
+            flexBox.style.flexWrap = 'wrap';
+            flexBox.style.height = '120px';
+          } else {
+            if(prop.name !== 'flex-wrap') flexBox.style.flexWrap = 'nowrap';
+          }
+          // ensure flex display
+          flexBox.style.display = 'flex';
+        }
+        select.addEventListener('change', () => {
+          updatePreview();
+        });
+        updatePreview();
+      } 
+      else if (prop.name === 'order') {
+        const info = document.createElement('p');
+        info.style.fontSize='0.8rem'; info.style.background='#f0e2c0'; info.style.padding='6px'; info.style.borderRadius='20px';
+        info.innerText = '🐸 Use Sandbox sliders to change order per frog. Drag order values (0,1,2,-1 etc). Order controls sequence!';
+        card.appendChild(info);
+        const miniFlex = document.createElement('div');
+        miniFlex.className = 'mini-flex';
+        miniFlex.style.display = 'flex';
+        miniFlex.style.flexDirection = 'row';
+        for(let i=1;i<=3;i++) {
+          const it = document.createElement('div');
+          it.className = 'mini-item';
+          it.innerText = i;
+          it.style.order = i===2 ? 1 : 0; // demo order effect
+          if(i===2) it.style.background = '#e09d32';
+          miniFlex.appendChild(it);
+        }
+        const caption = document.createElement('div');
+        caption.className = 'value-display';
+        caption.innerText = 'item 2 has order:1 → moves visually';
+        card.appendChild(miniFlex);
+        card.appendChild(caption);
+      }
+      else if (prop.name === 'align-self') {
+        const info = document.createElement('p');
+        info.style.fontSize='0.8rem'; info.style.background='#f0e2c0'; info.style.padding='6px'; info.style.borderRadius='20px';
+        info.innerText = '✨ In Sandbox, each frog has align-self dropdown. Overrides parent align-items.';
+        card.appendChild(info);
+        const demo = document.createElement('div');
+        demo.className = 'mini-flex';
+        demo.style.alignItems = 'center';
+        demo.style.height = '100px';
+        const a = document.createElement('div'); a.className='mini-item'; a.innerText='A';
+        const b = document.createElement('div'); b.className='mini-item'; b.innerText='B'; b.style.alignSelf='flex-end';
+        const c = document.createElement('div'); c.className='mini-item'; c.innerText='C';
+        demo.append(a,b,c);
+        const subcap = document.createElement('div'); subcap.className='value-display'; subcap.innerText = 'Middle frog (B) has align-self:flex-end';
+        card.appendChild(demo);
+        card.appendChild(subcap);
+      }
+      else if (prop.name === 'flex-flow') {
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-group';
+        const label = document.createElement('label');
+        label.innerText = '🎛️ flex-flow: direction + wrap';
+        const selectDir = document.createElement('select');
+        ['row', 'row-reverse', 'column', 'column-reverse'].forEach(d => {
+          const opt = document.createElement('option'); opt.value=d; opt.innerText=d;
+          selectDir.appendChild(opt);
+        });
+        const selectWrap = document.createElement('select');
+        ['nowrap', 'wrap', 'wrap-reverse'].forEach(w => {
+          const opt = document.createElement('option'); opt.value=w; opt.innerText=w;
+          selectWrap.appendChild(opt);
+        });
+        controlDiv.appendChild(label);
+        controlDiv.appendChild(selectDir);
+        controlDiv.appendChild(selectWrap);
+        card.appendChild(controlDiv);
+        const preview = document.createElement('div');
+        preview.className = 'mini-preview';
+        const flowBox = document.createElement('div');
+        flowBox.className = 'mini-flex';
+        for(let i=0;i<4;i++) { let it=document.createElement('div'); it.className='mini-item'; it.innerText=i+1; flowBox.appendChild(it); }
+        preview.appendChild(flowBox);
+        card.appendChild(preview);
+        function updateFlow() {
+          flowBox.style.flexDirection = selectDir.value;
+          flowBox.style.flexWrap = selectWrap.value;
+          if(selectDir.value.includes('column')) flowBox.style.minHeight = '130px';
+          else flowBox.style.minHeight = '80px';
+        }
+        selectDir.addEventListener('change', updateFlow);
+        selectWrap.addEventListener('change', updateFlow);
+        updateFlow();
+      }
+      else if (prop.name === 'flex-wrap') {
+        // already handled select? but we skip duplicate, but actually flex-wrap already part of select array, but we have separate prop. Use same select logic.
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-group';
+        const label = document.createElement('label');
+        label.innerText = `🎛️ flex-wrap:`;
+        const select = document.createElement('select');
+        ['nowrap','wrap','wrap-reverse'].forEach(opt=>{let o=document.createElement('option');o.value=opt;o.innerText=opt;select.appendChild(o);});
+        select.value='nowrap';
+        controlDiv.appendChild(label); controlDiv.appendChild(select);
+        card.appendChild(controlDiv);
+        const wrapPreview = document.createElement('div');
+        wrapPreview.className = 'mini-preview';
+        const wrapFlex = document.createElement('div');
+        wrapFlex.className = 'mini-flex';
+        wrapFlex.style.width='180px';
+        for(let i=0;i<6;i++){let it=document.createElement('div');it.className='mini-item';it.innerText=i+1;it.style.width='45px';wrapFlex.appendChild(it);}
+        wrapPreview.appendChild(wrapFlex);
+        card.appendChild(wrapPreview);
+        select.addEventListener('change',()=>{wrapFlex.style.flexWrap=select.value;});
+        wrapFlex.style.flexWrap='nowrap';
+      }
+      gridContainer.appendChild(card);
+    });
+  }
+
+  // ----- BUILD SANDBOX ADVANCED CONTROLS (order per frog, align-self per frog + global props)
+  function buildSandboxControls() {
+    const panel = document.getElementById('sandboxControlsPanel');
+    panel.innerHTML = '';
+    // first row global props
+    const globalProps = ['justifyContent', 'alignItems', 'flexDirection', 'flexWrap', 'alignContent'];
+    globalProps.forEach(prop => {
+      const group = document.createElement('div');
+      group.className = 'prop-group';
+      const label = document.createElement('label');
+      label.innerText = prop;
+      let select;
+      if (prop === 'justifyContent') select = createSelect(['flex-start','flex-end','center','space-between','space-around','space-evenly'], sandboxState.justifyContent);
+      if (prop === 'alignItems') select = createSelect(['stretch','flex-start','flex-end','center','baseline'], sandboxState.alignItems);
+      if (prop === 'flexDirection') select = createSelect(['row','row-reverse','column','column-reverse'], sandboxState.flexDirection);
+      if (prop === 'flexWrap') select = createSelect(['nowrap','wrap','wrap-reverse'], sandboxState.flexWrap);
+      if (prop === 'alignContent') select = createSelect(['stretch','flex-start','flex-end','center','space-between','space-around'], sandboxState.alignContent);
+      select.id = `sb-${prop}`;
+      select.addEventListener('change', (e) => { updateSandboxProperty(prop, e.target.value); });
+      group.appendChild(label);
+      group.appendChild(select);
+      panel.appendChild(group);
+    });
+    // order + alignSelf per frog section
+    const frogPanel = document.createElement('div');
+    frogPanel.style.width = '100%';
+    frogPanel.style.display = 'flex';
+    frogPanel.style.flexWrap = 'wrap';
+    frogPanel.style.gap = '12px';
+    frogPanel.style.marginTop = '8px';
+    frogPanel.style.background = '#e9ddb0';
+    frogPanel.style.padding = '12px';
+    frogPanel.style.borderRadius = '32px';
+    frogPanel.innerHTML = '<div style="width:100%; font-weight:bold;">🐸 Per-Frog: Order & Align-Self</div>';
+    for(let i=0;i<5;i++) {
+      const frogCtrl = document.createElement('div');
+      frogCtrl.style.background = '#fff2dd';
+      frogCtrl.style.borderRadius = '28px';
+      frogCtrl.style.padding = '8px 12px';
+      frogCtrl.style.minWidth = '140px';
+      frogCtrl.innerHTML = `<strong>Frog ${i+1}</strong><br>Order: <input type="range" min="-3" max="5" value="0" id="order-slider-${i}" step="1"><span id="order-val-${i}" style="display:inline-block;width:28px;">0</span><br>align-self: 
+      <select id="alignself-select-${i}"><option value="auto">auto</option><option value="flex-start">flex-start</option><option value="flex-end">flex-end</option><option value="center">center</option><option value="stretch">stretch</option><option value="baseline">baseline</option></select>`;
+      frogCtrl.querySelector(`#order-slider-${i}`).addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        document.getElementById(`order-val-${i}`).innerText = val;
+        updateFrogOrder(i, val);
+      });
+      frogCtrl.querySelector(`#alignself-select-${i}`).addEventListener('change', (e) => {
+        updateFrogAlignSelf(i, e.target.value);
+      });
+      frogPanel.appendChild(frogCtrl);
+    }
+    panel.appendChild(frogPanel);
+    syncSandboxControlsToState();
+  }
+
+  function createSelect(options, currentVal) {
+    const sel = document.createElement('select');
+    options.forEach(opt => { let o=document.createElement('option'); o.value=opt; o.innerText=opt; if(opt===currentVal) o.selected=true; sel.appendChild(o); });
+    return sel;
+  }
+
+  function init() {
+    buildPropertyCards();
+    buildSandboxControls();
+    applySandboxStyles();
+    document.getElementById('resetSandboxBtn').addEventListener('click', resetSandbox);
+  }
+  init();
+</script>
 </body>
 </html>
