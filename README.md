@@ -1,71 +1,29 @@
-# 🌐 CSS Flexbox Master Sandbox & Curriculum
-![Flexbox Froggy](https://img.shields.io/badge/Flexbox_Froggy-Level_24%2F24_Complete-green?style=for-the-badge&logo=leaflet&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)
+# 🐸 Flexbox Froggy Master Demo: The Evolution
 
-> **The ultimate interactive playground for mastering the exact properties found in Flexbox Froggy.**
+An interactive, live-preview tool designed to turn the "dry" theory of CSS Flexbox into a hands-on visual experience. 
 
-This repository is a specialized learning tool designed to mirror the curriculum of [Flexbox Froggy](https://flexboxfroggy.com/). Built in collaboration with **DeepSeek AI**, it provides a "free-play" sandbox where you can test the logic required to pass all 24 levels of the game.
+## 🚀 Project Origins & Pivot
+This project originally began as a collaboration with **DeepSeek AI**. The goal was to build a comprehensive suite of live demos for every major Flexbox property. 
 
----
+As the project grew in complexity, the original model began to "drift"—missing specific CSS property naming conventions (using JavaScript camelCase instead of CSS kebab-case) and struggling to implement advanced formatting for the live code snippets. To ensure the highest level of technical accuracy and user experience, the project was transitioned to **Gemini AI** to finalize the logic and polish the educational tools.
 
-## 🚀 Access the Tool
+## 🛠️ The Gemini Corrections & Refinement
+During the transition, several key technical and educational fixes were implemented:
+* **Syntax Accuracy**: Converted all live code displays from JS property names (e.g., `justifyContent`) to valid CSS syntax (e.g., `justify-content`).
+* **Snippet Formatting**: Fixed the live code blocks for `order` and `align-self` to include `display: flex;` and proper multi-line indentation for readability.
+* **Logic Fixes**: Adjusted the `align-content: stretch` demo by switching item heights to `auto`, allowing the browser to actually demonstrate the stretching behavior.
 
-### ⚡ [Launch the Live Interactive Sandbox here!](https://astroboymonsterhigh.github.io/CSS_Flexbox_Demo_with_DeepSeek/)
+## 🎓 Beginner-Focused Features
+Flexbox can be difficult to grasp through reading alone. This version went through **multiple iterations** specifically to make it a better teaching tool:
+* **The "Default Zero" Concept**: Section 7 was expanded to 5 items, each labeled with `order: 0` to visually prove that items only move when their value differs from the default.
+* **Interactive Notifications**: Added styled reminder boxes to properties like `flex-wrap` and `flex-flow` to encourage users to **resize their browser window**, which is the only way to see responsive wrapping in action.
+* **Comprehensive Value Sets**: Every property now includes the full range of standard CSS values (e.g., `space-evenly`, `baseline`, `wrap-reverse`) rather than just the basics.
 
----
-
-## 📖 Flexbox Froggy Reference Guide
-The following properties are available for testing within the `index.html` sandbox. These match the core requirements for UI layout mastery:
-
-### 🏁 Container Properties (The Parent)
-| Property | Description | Common Values |
-| :--- | :--- | :--- |
-| `flex-direction` | Defines the direction of the items | `row`, `column`, `row-reverse`, `column-reverse` |
-| `justify-content` | Aligns items along the main axis | `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly` |
-| `align-items` | Aligns items along the cross axis | `flex-start`, `flex-end`, `center`, `baseline`, `stretch` |
-| `flex-wrap` | Controls if items wrap to new lines | `nowrap`, `wrap`, `wrap-reverse` |
-| `flex-flow` | A shorthand for direction & wrap | `row wrap`, `column nowrap`, etc. |
-| `align-content` | Aligns lines within the container | `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `stretch` |
-
-### 🧩 Item Properties (The Children)
-| Property | Description | Common Values |
-| :--- | :--- | :--- |
-| `order` | Sets the visual order of an item | `Integer (e.g., -1, 1, 2)` |
-| `align-self` | Overrides `align-items` for one specific item | `flex-start`, `flex-end`, `center`, `baseline`, `stretch` |
+## 💡 How to Use
+1.  Clone this repository or download the `.html` file.
+2.  Open the file in any modern web browser.
+3.  Interact with the dropdowns and sliders to see real-time changes.
+4.  **Pro Tip:** Resize your window while viewing sections 4, 5, and 6 to see how Flexbox handles layout overflow!
 
 ---
-
-## 🛠️ How to Use
-
-1. **Practice:** Open the [Live Demo](https://astroboymonsterhigh.github.io/CSS_Flexbox_Demo_with_DeepSeek/).
-2. **Experiment:** Input the properties listed above into the sandbox fields.
-3. **Download for Offline Use:** * Click `index.html` in this repo.
-   * Click the **Download** icon to keep a local copy for your own study.
-
----
-
-## 🧪 What I Learned (TIL)
-- ✅ Mastered the **24-level curriculum** of Flexbox Froggy.
-- ✅ Developed a custom UI to visualize axis alignment in real-time.
-- ✅ Successfully deployed a zero-dependency web tool via **GitHub Pages**.
-
----
-
-## 🛡️ Guardian Architecture: Security & Standards
-* **Local Integrity:** This tool is a "Self-Contained Unit." It requires no external scripts, making it immune to **CDN Injection attacks**.
-* **Clean Code:** The logic strictly uses standard CSS properties, ensuring cross-browser compatibility and predictable behavior.
-* **Minimalist Footprint:** By avoiding heavy libraries, the page loads instantly and securely on any device.
-
----
-
-## ⚙️ Tech Stack Organization
-| Category | Tools | Status |
-| :--- | :--- | :--- |
-| **Frontend** | HTML5, CSS3 (Flexbox), JavaScript | 🏗️ Building |
-| **Backend** | Python | ⚙️ Exploring |
-| **System** | Linux (Command Line) | 🐧 Learning |
-| **AI Integration** | DeepSeek AI | 🤖 Intermediate |
-
----
-*Created by [AstroboyMonsterHigh](https://github.com/AstroboyMonsterHigh) — Focused on clean, functional CSS education.*
+*Created with initial assistance from DeepSeek and perfected with Gemini AI.*
