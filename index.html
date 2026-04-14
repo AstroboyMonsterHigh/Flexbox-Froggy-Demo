@@ -2,722 +2,447 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>🐸 Flexbox Froggy: Interactive Playground & Sandbox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🐸 Flexbox Froggy · Master Each Property with Live Demos</title>
   <style>
-    * {
-      box-sizing: border-box;
-      user-select: none; /* avoid accidental text selection on sliders, but okay for learning */
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(145deg, #1b4d2e 0%, #0e3a22 100%);
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+      background: linear-gradient(145deg, #0a3b22 0%, #1b5e38 100%);
       margin: 0;
-      min-height: 100vh;
-      padding: 24px 20px;
+      padding: 28px 24px;
+      color: #1f2e1a;
     }
 
-    /* main container */
-    .app {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+    .master-container { max-width: 1400px; margin: 0 auto; }
 
-    /* header */
-    .header {
+    .hero {
       text-align: center;
-      margin-bottom: 28px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(6px);
+      border-radius: 70px;
+      padding: 16px 24px;
+      margin-bottom: 36px;
     }
-
-    .header h1 {
+    .hero h1 {
       font-size: 2.6rem;
       margin: 0;
-      color: #ffdd99;
-      text-shadow: 3px 3px 0 #2c5a2e;
-      letter-spacing: 2px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
+      color: #FFF5CF;
+      text-shadow: 3px 3px 0 #1f542a;
     }
+    .hero p { color: #f0ffdf; font-weight: 500; }
 
-    .header h1 span {
-      font-size: 2.8rem;
-    }
-
-    .sub {
-      color: #e9f5db;
-      font-weight: 500;
-      background: rgba(0,0,0,0.3);
-      display: inline-block;
-      padding: 6px 18px;
-      border-radius: 40px;
-      backdrop-filter: blur(2px);
-      margin-top: 10px;
-    }
-
-    /* property grid: 8 cards */
-    .property-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: rgba(255, 248, 225, 0.95);
-      border-radius: 32px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
-      padding: 14px 16px 20px;
-      transition: transform 0.1s ease;
-      backdrop-filter: blur(1px);
-      border: 1px solid #ffecb3;
-    }
-
-    .card h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 12px 0;
-      font-size: 1.35rem;
-      background: #2b5e2f;
-      display: inline-block;
-      padding: 4px 16px;
-      border-radius: 40px;
-      color: white;
-      background: #1f5438;
-      letter-spacing: 0.5px;
-    }
-
-    .control-group {
-      margin: 14px 0;
-    }
-
-    .control-group label {
-      font-weight: 600;
-      color: #2d3e2b;
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 28px;
-      border: 1px solid #b7b78a;
-      background: white;
-      font-weight: 500;
-      font-family: monospace;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    select {
-      background: #fef9e6;
-    }
-
-    input[type="range"] {
-      padding: 0;
-      height: 6px;
-      accent-color: #2e7d32;
-    }
-
-    .value-display {
-      background: #e9e0c7;
-      padding: 4px 8px;
-      border-radius: 20px;
-      font-family: monospace;
-      font-size: 0.8rem;
-      margin-top: 6px;
-      text-align: center;
-      font-weight: bold;
-      color: #1f3b1a;
-    }
-
-    /* mini preview inside each card */
-    .mini-preview {
-      background: #cfe3c3;
-      border-radius: 24px;
-      padding: 12px;
-      margin-top: 12px;
-      border: 1px solid #9bba8f;
-    }
-
-    .mini-flex {
-      display: flex;
-      background: #f2e5c2;
-      border-radius: 20px;
-      min-height: 80px;
-      padding: 8px;
-      gap: 6px;
-      flex-wrap: wrap;
-      transition: all 0.2s ease;
-    }
-
-    .mini-item {
-      background: #f5b042;
-      color: #2c2b1f;
-      width: 38px;
-      height: 38px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: all 0.1s;
-    }
-
-    /* MAIN SANDBOX */
-    .sandbox-section {
-      background: #1e2f1cde;
-      backdrop-filter: blur(4px);
+    .property-card {
+      background: rgba(255, 251, 240, 0.97);
       border-radius: 48px;
-      padding: 24px 22px 32px;
-      margin-top: 20px;
-      border: 2px solid #ffdd99;
-      box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+      margin-bottom: 44px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -8px rgba(0,0,0,0.4);
     }
 
-    .sandbox-title {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      gap: 12px;
+    .card-header {
+      background: #2c6a3b;
+      padding: 14px 28px;
+      border-bottom: 4px solid #f5c85b;
     }
-
-    .sandbox-title h2 {
+    .card-header h2 {
       margin: 0;
-      font-size: 2rem;
-      color: #ffefc0;
+      color: #FFECB3;
+      font-size: 1.8rem;
       display: flex;
-      gap: 12px;
       align-items: center;
+      gap: 12px;
     }
 
-    .reset-btn {
-      background: #fedba0;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 60px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.1s;
-      font-family: inherit;
-      box-shadow: 0 2px 6px black;
+    .demo-area { padding: 20px 28px 28px 28px; }
+
+    .flex-playground {
+      background: #ddd0b0;
+      border-radius: 42px;
+      padding: 24px;
     }
 
-    .reset-btn:hover {
-      background: #ffcd7e;
-      transform: scale(0.97);
-    }
-
-    /* sandbox control panel - selectors for all props */
-    .sandbox-controls {
-      background: #3a2e1faa;
-      border-radius: 36px;
-      padding: 20px;
-      margin-bottom: 28px;
+    .flex-demo {
       display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      justify-content: space-between;
-    }
-
-    .prop-group {
-      background: #fbf5e3;
-      border-radius: 28px;
-      padding: 10px 16px;
-      flex: 1 1 180px;
-      min-width: 150px;
-      box-shadow: inset 0 0 0 1px #ebd5a0, 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .prop-group label {
-      font-weight: bold;
-      display: block;
-      font-size: 0.8rem;
-      color: #3b522e;
-    }
-
-    .prop-group select, .prop-group input {
-      background: white;
-      margin-top: 4px;
-      font-size: 0.8rem;
-    }
-
-    /* the big playground flex container */
-    .playground {
-      background: #c2d5b0;
-      border-radius: 48px;
-      padding: 28px;
-      box-shadow: inset 0 0 0 3px #eef4e0, 0 12px 20px rgba(0,0,0,0.3);
-    }
-
-    .flex-sandbox {
-      display: flex;
-      background: #f6efdb;
-      min-height: 350px;
+      background: #fdf6e3;
       border-radius: 36px;
       padding: 20px;
       gap: 16px;
-      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      flex-wrap: wrap;
+      transition: all 0.2s ease;
     }
 
-    .frog-item {
-      background: #38a169;
-      background-image: radial-gradient(circle at 25% 35%, #5fbb7a, #2d6a4f);
-      width: 85px;
-      height: 85px;
-      border-radius: 40px 30px 50px 30px;
+    .demo-item {
+      background: linear-gradient(145deg, #5fcb86, #308a50);
+      color: white;
+      font-weight: bold;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 2.4rem;
-      font-weight: bold;
-      box-shadow: 0 6px 0 #1d3e1f;
-      transition: all 0.1s;
-      color: #ffefb9;
-      text-shadow: 2px 2px 0 #1f4f2b;
+      border-radius: 28px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 0 #1d522a;
     }
 
-    /* custom order marker */
-    .order-badge {
+    .order-label {
+      font-size: 0.65rem;
+      opacity: 0.9;
+      background: rgba(0,0,0,0.2);
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+
+    .wrap-demo-item { width: 85px; height: 75px; }
+    /* Height:auto is necessary for align-content: stretch to be visible */
+    .stretch-item { width: 85px; height: auto; min-height: 60px; }
+
+    .code-snippet {
+      background: #1f2c1c;
+      color: #e6f0da;
+      padding: 14px 20px;
+      border-radius: 32px;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin-top: 20px;
+      border-left: 8px solid #f6bc5a;
+      white-space: pre-wrap;
+    }
+
+    .control-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .info-reminder {
+      background: #e9dbbd;
+      border-left: 5px solid #f5a623;
+      padding: 10px 18px;
+      border-radius: 20px;
+      margin-top: 15px;
       font-size: 0.9rem;
-      background: #f4c542;
-      width: 28px;
-      height: 28px;
-      border-radius: 30px;
-      display: inline-flex;
+      color: #2a481f;
+      font-weight: 500;
+    }
+
+    select, input {
+      background: white;
+      border: 1.5px solid #b4914b;
+      padding: 8px 16px;
+      border-radius: 60px;
+      font-family: monospace;
+      cursor: pointer;
+    }
+
+    .order-demo-item {
+      width: 75px;
+      height: 75px;
+      background: linear-gradient(145deg, #5fcb86, #308a50);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      color: #2c2b1f;
-      margin-left: 6px;
+      color: white;
+      box-shadow: 0 6px 0 #1d522a;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
-    /* responsiveness */
-    @media (max-width: 750px) {
-      .frog-item { width: 65px; height: 65px; font-size: 1.8rem; }
-      .sandbox-controls { flex-direction: column; }
-      .property-grid { grid-template-columns: 1fr; }
+    .order-highlight {
+      background: linear-gradient(145deg, #f0a34b, #c97e2a);
+      outline: 3px solid #f5c85b;
+      outline-offset: 3px;
     }
   </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <h1>
-      <span>🐸</span> FLEXBOX FROGGY LAB <span>🍃</span>
-    </h1>
-    <div class="sub">🎮 adjust each property → see live previews → ultimate sandbox 🧪</div>
+<div class="master-container">
+  <div class="hero">
+    <h1>🐸 FLEXBOX FROGGY · MASTER DEMO 🎮</h1>
+    <p>⬇️ Interactive Code Editor ⬇️</p>
   </div>
 
-  <!-- 8 property cards with individual live demos -->
-  <div class="property-grid" id="propertyGrid">
-    <!-- each card will be populated via JS, but I'll build static structure with dynamic binding -->
-  </div>
-
-  <!-- MASTER SANDBOX: combine ALL properties -->
-  <div class="sandbox-section">
-    <div class="sandbox-title">
-      <h2>🐸✨ ULTIMATE FLEXBOX SANDBOX ✨🐸</h2>
-      <button class="reset-btn" id="resetSandboxBtn">⟳ Reset All Props</button>
-    </div>
-    <div class="sandbox-controls" id="sandboxControlsPanel">
-      <!-- dynamic controls: justify-content, align-items, flex-direction, order, align-self, flex-wrap, flex-flow, align-content -->
-    </div>
-    <div class="playground">
-      <div class="flex-sandbox" id="mainFlexSandbox">
-        <!-- 5 froggy items with custom order & align-self demonstration -->
-        <div class="frog-item" data-id="0">🐸<span class="order-badge">1</span></div>
-        <div class="frog-item" data-id="1">🐸<span class="order-badge">2</span></div>
-        <div class="frog-item" data-id="2">🐸<span class="order-badge">3</span></div>
-        <div class="frog-item" data-id="3">🐸<span class="order-badge">4</span></div>
-        <div class="frog-item" data-id="4">🐸<span class="order-badge">5</span></div>
+  <div class="property-card">
+    <div class="card-header"><h2>📏 1. justify-content</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="justifyDemo">
+          <div class="demo-item" style="width:70px; height:70px;">1</div>
+          <div class="demo-item" style="width:70px; height:70px;">2</div>
+          <div class="demo-item" style="width:70px; height:70px;">3</div>
+        </div>
+        <div class="control-bar">
+          <select id="justifySelect">
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center" selected>center</option>
+            <option value="space-between">space-between</option>
+            <option value="space-around">space-around</option>
+            <option value="space-evenly">space-evenly</option>
+          </select>
+        </div>
+        <div class="code-snippet" id="justifyCode"></div>
       </div>
     </div>
-    <div style="margin-top: 18px; text-align: center; font-size: 0.85rem; color: #ffecb3; background: #2d4625; width: fit-content; margin-inline: auto; padding: 6px 18px; border-radius: 60px;">
-      💡 Tip: 'order' changes sequence, 'align-self' overrides align-items per frog! Also flex-flow combines direction+wrap.
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>📐 2. align-items</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="alignDemo" style="min-height: 220px;">
+          <div class="demo-item" style="width:80px; min-height: 50px;">1</div>
+          <div class="demo-item" style="width:80px; min-height: 80px;">2</div>
+          <div class="demo-item" style="width:80px; min-height: 40px;">3</div>
+        </div>
+        <div class="control-bar">
+          <select id="alignSelect">
+            <option value="stretch">stretch</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="baseline">baseline</option>
+          </select>
+        </div>
+        <div class="code-snippet" id="alignCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>🧭 3. flex-direction</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="directionDemo">
+          <div class="demo-item" style="width:70px;height:70px;">A</div>
+          <div class="demo-item" style="width:70px;height:70px;">B</div>
+          <div class="demo-item" style="width:70px;height:70px;">C</div>
+        </div>
+        <div class="control-bar">
+          <select id="directionSelect">
+            <option value="row">row</option>
+            <option value="row-reverse">row-reverse</option>
+            <option value="column">column</option>
+            <option value="column-reverse">column-reverse</option>
+          </select>
+        </div>
+        <div class="code-snippet" id="directionCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>📦 4. flex-wrap</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="wrapDemo" style="flex-wrap: nowrap;">
+          <div class="demo-item wrap-demo-item">1</div>
+          <div class="demo-item wrap-demo-item">2</div>
+          <div class="demo-item wrap-demo-item">3</div>
+          <div class="demo-item wrap-demo-item">4</div>
+          <div class="demo-item wrap-demo-item">5</div>
+          <div class="demo-item wrap-demo-item">6</div>
+        </div>
+        <div class="control-bar">
+          <select id="wrapSelect">
+            <option value="nowrap">nowrap</option>
+            <option value="wrap">wrap</option>
+            <option value="wrap-reverse">wrap-reverse</option>
+          </select>
+        </div>
+        <div class="info-reminder">
+          💡 <strong>Tip:</strong> This property is designed for responsiveness! **Resize your browser window** to see how the boxes jump to new rows when space gets tight.
+        </div>
+        <div class="code-snippet" id="wrapCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>⚡ 5. flex-flow</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="flowDemo">
+          <div class="demo-item wrap-demo-item">🍎1</div>
+          <div class="demo-item wrap-demo-item">🍎2</div>
+          <div class="demo-item wrap-demo-item">🍎3</div>
+          <div class="demo-item wrap-demo-item">🍎4</div>
+          <div class="demo-item wrap-demo-item">🍎5</div>
+          <div class="demo-item wrap-demo-item">🍎6</div>
+        </div>
+        <div class="control-bar">
+          <select id="flowDirSelect">
+            <option value="row">row</option>
+            <option value="row-reverse">row-reverse</option>
+            <option value="column">column</option>
+            <option value="column-reverse">column-reverse</option>
+          </select>
+          <select id="flowWrapSelect">
+            <option value="nowrap">nowrap</option>
+            <option value="wrap">wrap</option>
+            <option value="wrap-reverse">wrap-reverse</option>
+          </select>
+        </div>
+        <div class="info-reminder">
+          💡 <strong>Tip:</strong> Resize your browser window to see how items wrap and follow the direction flow!
+        </div>
+        <div class="code-snippet" id="flowCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>📌 6. align-content</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="alignContentDemo" style="flex-wrap: wrap; min-height: 400px;">
+          <div class="demo-item stretch-item">A</div>
+          <div class="demo-item stretch-item">B</div>
+          <div class="demo-item stretch-item">C</div>
+          <div class="demo-item stretch-item">D</div>
+          <div class="demo-item stretch-item">E</div>
+          <div class="demo-item stretch-item">F</div>
+        </div>
+        <div class="control-bar">
+          <select id="alignContentSelect">
+            <option value="stretch">stretch</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="space-between">space-between</option>
+            <option value="space-around">space-around</option>
+          </select>
+        </div>
+        <div class="info-reminder">
+          💡 <strong>Note:</strong> <code>align-content</code> only works when items are <strong>wrapped</strong> into multiple rows. Making changes works best when you <strong>resize your window</strong> to force wrapping!
+        </div>
+        <div class="code-snippet" id="alignContentCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>🔢 7. order · The "Default Zero" Concept</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="orderDemo" style="gap: 14px; justify-content: center;">
+          <div class="order-demo-item">1 <span class="order-label">order: 0</span></div>
+          <div class="order-demo-item">2 <span class="order-label">order: 0</span></div>
+          <div class="order-demo-item order-highlight" id="orderItem3">
+            3 ⭐ <span class="order-label" id="liveOrderLabel">order: 0</span>
+          </div>
+          <div class="order-demo-item">4 <span class="order-label">order: 0</span></div>
+          <div class="order-demo-item">5 <span class="order-label">order: 0</span></div>
+        </div>
+        <div class="control-bar">
+          <label style="font-weight: bold; color: #2c6a3b;">Move Item 3 ⭐ : </label>
+          <input type="range" id="orderSlider" min="-5" max="5" value="0">
+          <span id="orderValue" style="background: #2c6a3b; color: white; padding: 4px 12px; border-radius: 20px;">0</span>
+        </div>
+        <div class="info-reminder">
+          💡 <strong>Crucial Lesson:</strong> Every flex item has a default <code>order: 0</code>. 
+          When you set Item 3 to <strong>-1</strong>, it moves before all the 0s. When you set it to <strong>1</strong>, it moves after all the 0s!
+        </div>
+        <div class="code-snippet" id="orderCode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="property-card">
+    <div class="card-header"><h2>🎯 8. align-self</h2></div>
+    <div class="demo-area">
+      <div class="flex-playground">
+        <div class="flex-demo" id="selfDemo" style="min-height: 220px; align-items: center;">
+          <div class="demo-item" style="width:70px; height:60px;">L</div>
+          <div class="demo-item" id="specialSelfItem" style="background: #f0a34b; width:70px; min-height: 50px;">MID</div>
+          <div class="demo-item" style="width:70px; height:60px;">R</div>
+        </div>
+        <div class="control-bar">
+          <select id="selfSelect">
+            <option value="auto">auto</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="baseline">baseline</option>
+            <option value="stretch">stretch</option>
+          </select>
+        </div>
+        <div class="code-snippet" id="selfCode"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // -------- helper: get DOM elements
-  const sandboxContainer = document.getElementById('mainFlexSandbox');
-  // frog items array (5 frogs)
-  let frogElements = () => Array.from(document.querySelectorAll('#mainFlexSandbox .frog-item'));
-
-  // ---------- STATE for sandbox (all flex properties) ----------
-  const sandboxState = {
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    alignContent: 'stretch',
-    flexFlowRowWrap: null,   // we'll handle flex-flow as separate but also combine
-    // for order we store array of order values per frog
-    orderValues: [0, 0, 0, 0, 0],
-    // alignSelf per frog
-    alignSelfValues: ['auto', 'auto', 'auto', 'auto', 'auto']
+  const cssMap = {
+    justifyContent: 'justify-content',
+    alignItems: 'align-items',
+    flexDirection: 'flex-direction',
+    flexWrap: 'flex-wrap',
+    alignContent: 'align-content'
   };
 
-  // apply all current sandbox styles to main flex container & individual frogs
-  function applySandboxStyles() {
-    const container = sandboxContainer;
-    // build flex properties
-    let flexDirectionVal = sandboxState.flexDirection;
-    let flexWrapVal = sandboxState.flexWrap;
-    // if flex-flow is explicitly changed, we could combine, but we have separate controls.
-    // but we also handle flex-flow via two selects, but for simplicity we apply direction + wrap separately
-    container.style.flexDirection = flexDirectionVal;
-    container.style.flexWrap = flexWrapVal;
-    container.style.justifyContent = sandboxState.justifyContent;
-    container.style.alignItems = sandboxState.alignItems;
-    container.style.alignContent = sandboxState.alignContent;
-    
-    // apply order and align-self to each frog
-    const frogs = frogElements();
-    frogs.forEach((frog, idx) => {
-      // order property
-      frog.style.order = sandboxState.orderValues[idx];
-      // align-self (if auto, remove to let container align-items take over)
-      const selfVal = sandboxState.alignSelfValues[idx];
-      if (selfVal === 'auto') {
-        frog.style.alignSelf = '';
-      } else {
-        frog.style.alignSelf = selfVal;
-      }
-      // update badge number to show visual order index (order value + original position)
-      const badgeSpan = frog.querySelector('.order-badge');
-      if (badgeSpan) {
-        let displayOrder = sandboxState.orderValues[idx];
-        badgeSpan.innerText = displayOrder;
-        // optional: if order != 0 show star
-        if(displayOrder !== 0) badgeSpan.style.background = "#ffaa44";
-        else badgeSpan.style.background = "#f4c542";
-      }
-    });
-  }
-
-  // update specific sandbox control and re-render
-  function updateSandboxProperty(prop, value) {
-    if (prop === 'order') return; // handled separately
-    if (prop === 'alignSelf') return;
-    sandboxState[prop] = value;
-    applySandboxStyles();
-  }
-
-  // update order for specific frog index
-  function updateFrogOrder(idx, orderVal) {
-    sandboxState.orderValues[idx] = parseInt(orderVal) || 0;
-    applySandboxStyles();
-  }
-
-  function updateFrogAlignSelf(idx, val) {
-    sandboxState.alignSelfValues[idx] = val;
-    applySandboxStyles();
-  }
-
-  // reset all sandbox properties to default
-  function resetSandbox() {
-    sandboxState.justifyContent = 'flex-start';
-    sandboxState.alignItems = 'stretch';
-    sandboxState.flexDirection = 'row';
-    sandboxState.flexWrap = 'nowrap';
-    sandboxState.alignContent = 'stretch';
-    sandboxState.orderValues = [0,0,0,0,0];
-    sandboxState.alignSelfValues = ['auto','auto','auto','auto','auto'];
-    // update all selectors and sliders in sandbox UI
-    syncSandboxControlsToState();
-    applySandboxStyles();
-  }
-
-  // sync UI selects/inputs to current state
-  function syncSandboxControlsToState() {
-    const jcSelect = document.getElementById('sb-justifyContent');
-    if(jcSelect) jcSelect.value = sandboxState.justifyContent;
-    const aiSelect = document.getElementById('sb-alignItems');
-    if(aiSelect) aiSelect.value = sandboxState.alignItems;
-    const fdSelect = document.getElementById('sb-flexDirection');
-    if(fdSelect) fdSelect.value = sandboxState.flexDirection;
-    const fwSelect = document.getElementById('sb-flexWrap');
-    if(fwSelect) fwSelect.value = sandboxState.flexWrap;
-    const acSelect = document.getElementById('sb-alignContent');
-    if(acSelect) acSelect.value = sandboxState.alignContent;
-    // order sliders
-    for(let i=0;i<5;i++) {
-      const orderSlider = document.getElementById(`order-slider-${i}`);
-      if(orderSlider) orderSlider.value = sandboxState.orderValues[i];
-      const orderValSpan = document.getElementById(`order-val-${i}`);
-      if(orderValSpan) orderValSpan.innerText = sandboxState.orderValues[i];
-      const alignSelfSelect = document.getElementById(`alignself-select-${i}`);
-      if(alignSelfSelect) alignSelfSelect.value = sandboxState.alignSelfValues[i];
+  function setupLiveCode(selector, propName, targetId, codeId) {
+    const el = document.querySelector(selector);
+    const demo = document.getElementById(targetId);
+    const code = document.getElementById(codeId);
+    function update() {
+      demo.style[propName] = el.value;
+      const cssProp = cssMap[propName] || propName;
+      code.innerText = `.flex-container {\n  display: flex;\n  ${cssProp}: ${el.value};\n}`;
     }
+    if(el){ el.addEventListener('change', update); update(); }
   }
 
-  // ---------- BUILD INDIVIDUAL PROPERTY CARDS (8 cards) ----------
-  const propertyDefinitions = [
-    { name: 'justify-content', options: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'], default: 'flex-start', type: 'select' },
-    { name: 'align-items', options: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'], default: 'stretch', type: 'select' },
-    { name: 'flex-direction', options: ['row', 'row-reverse', 'column', 'column-reverse'], default: 'row', type: 'select' },
-    { name: 'order', desc: 'Order (individual item)', type: 'orderDemo', note: 'Drag slider per frog in sandbox → here we show mini order demo' },
-    { name: 'align-self', type: 'selfDemo', note: 'Overrides align-items for specific item' },
-    { name: 'flex-wrap', options: ['nowrap', 'wrap', 'wrap-reverse'], default: 'nowrap', type: 'select' },
-    { name: 'flex-flow', type: 'flexFlowDemo', note: 'Shorthand: direction + wrap' },
-    { name: 'align-content', options: ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around'], default: 'stretch', type: 'select' }
-  ];
+  setupLiveCode('#justifySelect', 'justifyContent', 'justifyDemo', 'justifyCode');
+  setupLiveCode('#alignSelect', 'alignItems', 'alignDemo', 'alignCode');
+  setupLiveCode('#directionSelect', 'flexDirection', 'directionDemo', 'directionCode');
+  setupLiveCode('#wrapSelect', 'flexWrap', 'wrapDemo', 'wrapCode');
+  setupLiveCode('#alignContentSelect', 'alignContent', 'alignContentDemo', 'alignContentCode');
 
-  const gridContainer = document.getElementById('propertyGrid');
-  function buildPropertyCards() {
-    gridContainer.innerHTML = '';
-    // for each property, build card with mini interactive preview
-    propertyDefinitions.forEach(prop => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const titleSpan = document.createElement('h3');
-      titleSpan.innerText = prop.name;
-      card.appendChild(titleSpan);
-      
-      if (prop.type === 'select') {
-        const controlDiv = document.createElement('div');
-        controlDiv.className = 'control-group';
-        const label = document.createElement('label');
-        label.innerText = `🎛️ ${prop.name}:`;
-        const select = document.createElement('select');
-        prop.options.forEach(opt => {
-          const option = document.createElement('option');
-          option.value = opt;
-          option.innerText = opt;
-          select.appendChild(option);
-        });
-        select.value = prop.default;
-        controlDiv.appendChild(label);
-        controlDiv.appendChild(select);
-        card.appendChild(controlDiv);
-        
-        // mini preview container
-        const previewDiv = document.createElement('div');
-        previewDiv.className = 'mini-preview';
-        const flexBox = document.createElement('div');
-        flexBox.className = 'mini-flex';
-        // create 3 colorful items
-        for(let i=1;i<=3;i++) {
-          const item = document.createElement('div');
-          item.className = 'mini-item';
-          item.innerText = i;
-          flexBox.appendChild(item);
-        }
-        previewDiv.appendChild(flexBox);
-        card.appendChild(previewDiv);
-        
-        // update preview based on select
-        function updatePreview() {
-          flexBox.style[prop.name] = select.value;
-          // for flex-direction we need also align-items default? we set row default, also min-height
-          if(prop.name === 'flex-direction') {
-            if(select.value === 'column' || select.value === 'column-reverse') {
-              flexBox.style.minHeight = '120px';
-            } else {
-              flexBox.style.minHeight = '80px';
-            }
-          } else {
-            flexBox.style.minHeight = '80px';
-          }
-          if(prop.name === 'align-content') {
-            flexBox.style.flexWrap = 'wrap';
-            flexBox.style.height = '120px';
-          } else {
-            if(prop.name !== 'flex-wrap') flexBox.style.flexWrap = 'nowrap';
-          }
-          // ensure flex display
-          flexBox.style.display = 'flex';
-        }
-        select.addEventListener('change', () => {
-          updatePreview();
-        });
-        updatePreview();
-      } 
-      else if (prop.name === 'order') {
-        const info = document.createElement('p');
-        info.style.fontSize='0.8rem'; info.style.background='#f0e2c0'; info.style.padding='6px'; info.style.borderRadius='20px';
-        info.innerText = '🐸 Use Sandbox sliders to change order per frog. Drag order values (0,1,2,-1 etc). Order controls sequence!';
-        card.appendChild(info);
-        const miniFlex = document.createElement('div');
-        miniFlex.className = 'mini-flex';
-        miniFlex.style.display = 'flex';
-        miniFlex.style.flexDirection = 'row';
-        for(let i=1;i<=3;i++) {
-          const it = document.createElement('div');
-          it.className = 'mini-item';
-          it.innerText = i;
-          it.style.order = i===2 ? 1 : 0; // demo order effect
-          if(i===2) it.style.background = '#e09d32';
-          miniFlex.appendChild(it);
-        }
-        const caption = document.createElement('div');
-        caption.className = 'value-display';
-        caption.innerText = 'item 2 has order:1 → moves visually';
-        card.appendChild(miniFlex);
-        card.appendChild(caption);
-      }
-      else if (prop.name === 'align-self') {
-        const info = document.createElement('p');
-        info.style.fontSize='0.8rem'; info.style.background='#f0e2c0'; info.style.padding='6px'; info.style.borderRadius='20px';
-        info.innerText = '✨ In Sandbox, each frog has align-self dropdown. Overrides parent align-items.';
-        card.appendChild(info);
-        const demo = document.createElement('div');
-        demo.className = 'mini-flex';
-        demo.style.alignItems = 'center';
-        demo.style.height = '100px';
-        const a = document.createElement('div'); a.className='mini-item'; a.innerText='A';
-        const b = document.createElement('div'); b.className='mini-item'; b.innerText='B'; b.style.alignSelf='flex-end';
-        const c = document.createElement('div'); c.className='mini-item'; c.innerText='C';
-        demo.append(a,b,c);
-        const subcap = document.createElement('div'); subcap.className='value-display'; subcap.innerText = 'Middle frog (B) has align-self:flex-end';
-        card.appendChild(demo);
-        card.appendChild(subcap);
-      }
-      else if (prop.name === 'flex-flow') {
-        const controlDiv = document.createElement('div');
-        controlDiv.className = 'control-group';
-        const label = document.createElement('label');
-        label.innerText = '🎛️ flex-flow: direction + wrap';
-        const selectDir = document.createElement('select');
-        ['row', 'row-reverse', 'column', 'column-reverse'].forEach(d => {
-          const opt = document.createElement('option'); opt.value=d; opt.innerText=d;
-          selectDir.appendChild(opt);
-        });
-        const selectWrap = document.createElement('select');
-        ['nowrap', 'wrap', 'wrap-reverse'].forEach(w => {
-          const opt = document.createElement('option'); opt.value=w; opt.innerText=w;
-          selectWrap.appendChild(opt);
-        });
-        controlDiv.appendChild(label);
-        controlDiv.appendChild(selectDir);
-        controlDiv.appendChild(selectWrap);
-        card.appendChild(controlDiv);
-        const preview = document.createElement('div');
-        preview.className = 'mini-preview';
-        const flowBox = document.createElement('div');
-        flowBox.className = 'mini-flex';
-        for(let i=0;i<4;i++) { let it=document.createElement('div'); it.className='mini-item'; it.innerText=i+1; flowBox.appendChild(it); }
-        preview.appendChild(flowBox);
-        card.appendChild(preview);
-        function updateFlow() {
-          flowBox.style.flexDirection = selectDir.value;
-          flowBox.style.flexWrap = selectWrap.value;
-          if(selectDir.value.includes('column')) flowBox.style.minHeight = '130px';
-          else flowBox.style.minHeight = '80px';
-        }
-        selectDir.addEventListener('change', updateFlow);
-        selectWrap.addEventListener('change', updateFlow);
-        updateFlow();
-      }
-      else if (prop.name === 'flex-wrap') {
-        // already handled select? but we skip duplicate, but actually flex-wrap already part of select array, but we have separate prop. Use same select logic.
-        const controlDiv = document.createElement('div');
-        controlDiv.className = 'control-group';
-        const label = document.createElement('label');
-        label.innerText = `🎛️ flex-wrap:`;
-        const select = document.createElement('select');
-        ['nowrap','wrap','wrap-reverse'].forEach(opt=>{let o=document.createElement('option');o.value=opt;o.innerText=opt;select.appendChild(o);});
-        select.value='nowrap';
-        controlDiv.appendChild(label); controlDiv.appendChild(select);
-        card.appendChild(controlDiv);
-        const wrapPreview = document.createElement('div');
-        wrapPreview.className = 'mini-preview';
-        const wrapFlex = document.createElement('div');
-        wrapFlex.className = 'mini-flex';
-        wrapFlex.style.width='180px';
-        for(let i=0;i<6;i++){let it=document.createElement('div');it.className='mini-item';it.innerText=i+1;it.style.width='45px';wrapFlex.appendChild(it);}
-        wrapPreview.appendChild(wrapFlex);
-        card.appendChild(wrapPreview);
-        select.addEventListener('change',()=>{wrapFlex.style.flexWrap=select.value;});
-        wrapFlex.style.flexWrap='nowrap';
-      }
-      gridContainer.appendChild(card);
-    });
+  // Flex-flow
+  const fDir = document.getElementById('flowDirSelect');
+  const fWrap = document.getElementById('flowWrapSelect');
+  const fDemo = document.getElementById('flowDemo');
+  const fCode = document.getElementById('flowCode');
+  function upFlow() {
+    fDemo.style.flexDirection = fDir.value;
+    fDemo.style.flexWrap = fWrap.value;
+    fCode.innerText = `.flex-container {\n  display: flex;\n  flex-flow: ${fDir.value} ${fWrap.value};\n}`;
   }
+  fDir.addEventListener('change', upFlow);
+  fWrap.addEventListener('change', upFlow);
+  upFlow();
 
-  // ----- BUILD SANDBOX ADVANCED CONTROLS (order per frog, align-self per frog + global props)
-  function buildSandboxControls() {
-    const panel = document.getElementById('sandboxControlsPanel');
-    panel.innerHTML = '';
-    // first row global props
-    const globalProps = ['justifyContent', 'alignItems', 'flexDirection', 'flexWrap', 'alignContent'];
-    globalProps.forEach(prop => {
-      const group = document.createElement('div');
-      group.className = 'prop-group';
-      const label = document.createElement('label');
-      label.innerText = prop;
-      let select;
-      if (prop === 'justifyContent') select = createSelect(['flex-start','flex-end','center','space-between','space-around','space-evenly'], sandboxState.justifyContent);
-      if (prop === 'alignItems') select = createSelect(['stretch','flex-start','flex-end','center','baseline'], sandboxState.alignItems);
-      if (prop === 'flexDirection') select = createSelect(['row','row-reverse','column','column-reverse'], sandboxState.flexDirection);
-      if (prop === 'flexWrap') select = createSelect(['nowrap','wrap','wrap-reverse'], sandboxState.flexWrap);
-      if (prop === 'alignContent') select = createSelect(['stretch','flex-start','flex-end','center','space-between','space-around'], sandboxState.alignContent);
-      select.id = `sb-${prop}`;
-      select.addEventListener('change', (e) => { updateSandboxProperty(prop, e.target.value); });
-      group.appendChild(label);
-      group.appendChild(select);
-      panel.appendChild(group);
-    });
-    // order + alignSelf per frog section
-    const frogPanel = document.createElement('div');
-    frogPanel.style.width = '100%';
-    frogPanel.style.display = 'flex';
-    frogPanel.style.flexWrap = 'wrap';
-    frogPanel.style.gap = '12px';
-    frogPanel.style.marginTop = '8px';
-    frogPanel.style.background = '#e9ddb0';
-    frogPanel.style.padding = '12px';
-    frogPanel.style.borderRadius = '32px';
-    frogPanel.innerHTML = '<div style="width:100%; font-weight:bold;">🐸 Per-Frog: Order & Align-Self</div>';
-    for(let i=0;i<5;i++) {
-      const frogCtrl = document.createElement('div');
-      frogCtrl.style.background = '#fff2dd';
-      frogCtrl.style.borderRadius = '28px';
-      frogCtrl.style.padding = '8px 12px';
-      frogCtrl.style.minWidth = '140px';
-      frogCtrl.innerHTML = `<strong>Frog ${i+1}</strong><br>Order: <input type="range" min="-3" max="5" value="0" id="order-slider-${i}" step="1"><span id="order-val-${i}" style="display:inline-block;width:28px;">0</span><br>align-self: 
-      <select id="alignself-select-${i}"><option value="auto">auto</option><option value="flex-start">flex-start</option><option value="flex-end">flex-end</option><option value="center">center</option><option value="stretch">stretch</option><option value="baseline">baseline</option></select>`;
-      frogCtrl.querySelector(`#order-slider-${i}`).addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-        document.getElementById(`order-val-${i}`).innerText = val;
-        updateFrogOrder(i, val);
-      });
-      frogCtrl.querySelector(`#alignself-select-${i}`).addEventListener('change', (e) => {
-        updateFrogAlignSelf(i, e.target.value);
-      });
-      frogPanel.appendChild(frogCtrl);
-    }
-    panel.appendChild(frogPanel);
-    syncSandboxControlsToState();
-  }
+  // Order
+  const oSlider = document.getElementById('orderSlider');
+  const oValue = document.getElementById('orderValue');
+  const oItem3 = document.getElementById('orderItem3');
+  const oLabel = document.getElementById('liveOrderLabel');
+  const oCode = document.getElementById('orderCode');
+  oSlider.addEventListener('input', (e) => {
+    const val = e.target.value;
+    oValue.innerText = val;
+    oItem3.style.order = val;
+    oLabel.innerText = `order: ${val}`;
+    oCode.innerText = `.item-highlighted { \n   display: flex; \n   order: ${val}; /* change this value */ \n   }`;
+  });
+  oSlider.dispatchEvent(new Event('input'));
 
-  function createSelect(options, currentVal) {
-    const sel = document.createElement('select');
-    options.forEach(opt => { let o=document.createElement('option'); o.value=opt; o.innerText=opt; if(opt===currentVal) o.selected=true; sel.appendChild(o); });
-    return sel;
-  }
-
-  function init() {
-    buildPropertyCards();
-    buildSandboxControls();
-    applySandboxStyles();
-    document.getElementById('resetSandboxBtn').addEventListener('click', resetSandbox);
-  }
-  init();
+  // Align-self
+  const sSelect = document.getElementById('selfSelect');
+  const sItem = document.getElementById('specialSelfItem');
+  const sCode = document.getElementById('selfCode');
+  sSelect.addEventListener('change', () => {
+    sItem.style.alignSelf = sSelect.value;
+    sCode.innerText = `.specific-child {\n  display: flex;\n  align-self: ${sSelect.value};\n}`;
+  });
+  sSelect.dispatchEvent(new Event('change'));
 </script>
 </body>
 </html>

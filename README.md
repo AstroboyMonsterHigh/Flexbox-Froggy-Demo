@@ -1,71 +1,32 @@
-# 🌐 CSS Flexbox Master Sandbox & Curriculum
-![Flexbox Froggy](https://img.shields.io/badge/Flexbox_Froggy-Level_24%2F24_Complete-green?style=for-the-badge&logo=leaflet&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge)
+# 🐸 Flexbox Froggy Master Demo: The Evolution
 
-> **The ultimate interactive playground for mastering the exact properties found in Flexbox Froggy.**
+An interactive, live-preview tool designed to turn the "dry" theory of CSS Flexbox into a hands-on visual experience. 
 
-This repository is a specialized learning tool designed to mirror the curriculum of [Flexbox Froggy](https://flexboxfroggy.com/). Built in collaboration with **DeepSeek AI**, it provides a "free-play" sandbox where you can test the logic required to pass all 24 levels of the game.
-
----
-
-## 🚀 Access the Tool
-
-### ⚡ [Launch the Live Interactive Sandbox here!](https://astroboymonsterhigh.github.io/CSS_Flexbox_Demo_with_DeepSeek/)
+## 🚀 Quick Access for Beginners
+* **[🎮 Click Here to Play the Interactive Demo](https://astroboymonsterhigh.github.io/CSS_Flexbox_Demo_with_DeepSeek/)** (Requires GitHub Pages to be enabled in settings)
+* **[📥 Click Here to Download index.html](https://raw.githubusercontent.com/AstroboyMonsterHigh/CSS_Flexbox_Demo_with_DeepSeek/main/index.html)** (Right-click and "Save Link As")
+* **[🐸 Play the Original Flexbox Froggy Game](https://flexboxfroggy.com/)**
 
 ---
 
-## 📖 Flexbox Froggy Reference Guide
-The following properties are available for testing within the `index.html` sandbox. These match the core requirements for UI layout mastery:
+## 🧭 Project Origins & Pivot
+This project originally began as a collaboration with **DeepSeek AI** to build a comprehensive suite of live demos for every major Flexbox property. As the project grew, it was transitioned to **Gemini AI** to refine technical accuracy, fix CSS syntax errors, and enhance the educational layout.
 
-### 🏁 Container Properties (The Parent)
-| Property | Description | Common Values |
-| :--- | :--- | :--- |
-| `flex-direction` | Defines the direction of the items | `row`, `column`, `row-reverse`, `column-reverse` |
-| `justify-content` | Aligns items along the main axis | `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `space-evenly` |
-| `align-items` | Aligns items along the cross axis | `flex-start`, `flex-end`, `center`, `baseline`, `stretch` |
-| `flex-wrap` | Controls if items wrap to new lines | `nowrap`, `wrap`, `wrap-reverse` |
-| `flex-flow` | A shorthand for direction & wrap | `row wrap`, `column nowrap`, etc. |
-| `align-content` | Aligns lines within the container | `flex-start`, `flex-end`, `center`, `space-between`, `space-around`, `stretch` |
+## 🛠️ Key Gemini Corrections
+* **Syntax Accuracy**: Fixed live code snippets to use proper CSS kebab-case (e.g., `justify-content`) instead of JavaScript camelCase.
+* **Snippet Formatting**: Updated `order` and `align-self` code blocks to include `display: flex;` and proper indentation for better readability.
+* **Logic Fixes**: Corrected the `align-content: stretch` demo by setting item heights to `auto` so the stretching behavior is actually visible.
 
-### 🧩 Item Properties (The Children)
-| Property | Description | Common Values |
-| :--- | :--- | :--- |
-| `order` | Sets the visual order of an item | `Integer (e.g., -1, 1, 2)` |
-| `align-self` | Overrides `align-items` for one specific item | `flex-start`, `flex-end`, `center`, `baseline`, `stretch` |
+## 🎓 Beginner-Focused Features
+This version went through **multiple iterations** specifically to make it a better teaching tool:
+* **The "Default Zero" Concept**: Section 7 features 5 items labeled with `order: 0` to prove that items only move when their value differs from the default.
+* **Interactive Notifications**: Added reminder boxes to `flex-wrap` and `flex-flow` encouraging users to **resize their browser window** to see responsive behavior in action.
+* **Comprehensive Value Sets**: Includes the full range of CSS values (e.g., `space-evenly`, `baseline`, `wrap-reverse`) rather than just the basics.
 
----
-
-## 🛠️ How to Use
-
-1. **Practice:** Open the [Live Demo](https://astroboymonsterhigh.github.io/CSS_Flexbox_Demo_with_DeepSeek/).
-2. **Experiment:** Input the properties listed above into the sandbox fields.
-3. **Download for Offline Use:** * Click `index.html` in this repo.
-   * Click the **Download** icon to keep a local copy for your own study.
+## 💡 How to Use
+1.  Open the interactive demo link above or open the downloaded `.html` file in any browser.
+2.  Interact with the dropdowns and sliders to see real-time changes in the preview and code snippets.
+3.  **Pro Tip:** Resize your browser window while viewing sections 4, 5, and 6 to see how Flexbox handles layout overflow!
 
 ---
-
-## 🧪 What I Learned (TIL)
-- ✅ Mastered the **24-level curriculum** of Flexbox Froggy.
-- ✅ Developed a custom UI to visualize axis alignment in real-time.
-- ✅ Successfully deployed a zero-dependency web tool via **GitHub Pages**.
-
----
-
-## 🛡️ Guardian Architecture: Security & Standards
-* **Local Integrity:** This tool is a "Self-Contained Unit." It requires no external scripts, making it immune to **CDN Injection attacks**.
-* **Clean Code:** The logic strictly uses standard CSS properties, ensuring cross-browser compatibility and predictable behavior.
-* **Minimalist Footprint:** By avoiding heavy libraries, the page loads instantly and securely on any device.
-
----
-
-## ⚙️ Tech Stack Organization
-| Category | Tools | Status |
-| :--- | :--- | :--- |
-| **Frontend** | HTML5, CSS3 (Flexbox), JavaScript | 🏗️ Building |
-| **Backend** | Python | ⚙️ Exploring |
-| **System** | Linux (Command Line) | 🐧 Learning |
-| **AI Integration** | DeepSeek AI | 🤖 Intermediate |
-
----
-*Created by [AstroboyMonsterHigh](https://github.com/AstroboyMonsterHigh) — Focused on clean, functional CSS education.*
+*Created with initial assistance from DeepSeek and perfected with Gemini AI.*
